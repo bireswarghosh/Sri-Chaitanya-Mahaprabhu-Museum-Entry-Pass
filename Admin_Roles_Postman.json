@@ -1,0 +1,119 @@
+{
+  "info": {
+    "name": "Admin Roles Management",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Roles",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{auth_token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/roles",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "roles"]
+        }
+      }
+    },
+    {
+      "name": "Get Role by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{auth_token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/roles/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "roles", "1"]
+        }
+      }
+    },
+    {
+      "name": "Create New Role",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{auth_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"admin_role_title\": \"Manager\",\n  \"admin_role_status\": 1\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/roles",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "roles"]
+        }
+      }
+    },
+    {
+      "name": "Update Role",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{auth_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"admin_role_title\": \"Senior Manager\",\n  \"admin_role_status\": 1\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/roles/6",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "roles", "6"]
+        }
+      }
+    },
+    {
+      "name": "Delete Role",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{auth_token}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/roles/6",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "roles", "6"]
+        }
+      }
+    }
+  ]
+}

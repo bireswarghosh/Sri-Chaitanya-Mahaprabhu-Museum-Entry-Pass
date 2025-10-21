@@ -1,0 +1,423 @@
+{
+  "info": {
+    "name": "Museum Complete API Collection",
+    "description": "Complete Museum Management System API with Authentication",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{auth_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "auth_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login Super Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('auth_token', response.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"superadmin\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/profile",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "profile"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Management",
+      "item": [
+        {
+          "name": "Get All Admins",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin"]
+            }
+          }
+        },
+        {
+          "name": "Get Admin by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create New Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"newadmin\",\n  \"firstname\": \"New\",\n  \"lastname\": \"Admin\",\n  \"email\": \"newadmin@museum.com\",\n  \"mobile_no\": \"9876543210\",\n  \"password\": \"admin123\",\n  \"admin_role_id\": 2\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin"]
+            }
+          }
+        },
+        {
+          "name": "Update Admin",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Updated\",\n  \"lastname\": \"Admin\",\n  \"email\": \"updated@museum.com\",\n  \"mobile_no\": \"9876543211\",\n  \"admin_role_id\": 3,\n  \"is_active\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Admin",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/2",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "2"]
+            }
+          }
+        },
+        {
+          "name": "Get Admin Roles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/roles/list",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "roles", "list"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Museum Entry - Public",
+      "item": [
+        {
+          "name": "Create Entry (Public)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"John Doe\",\n  \"phone\": \"1234567890\",\n  \"address\": \"Delhi, India\",\n  \"num_of_persons\": \"2\",\n  \"total_amt\": \"100\",\n  \"payment\": \"1\",\n  \"gallery\": \"1\",\n  \"movie_show\": \"0\",\n  \"discount\": \"0\",\n  \"image_name\": \"photo123.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/museum/public",
+              "host": ["{{base_url}}"],
+              "path": ["api", "museum", "public"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Museum Entry - Admin",
+      "item": [
+        {
+          "name": "Get All Entries",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/museum",
+              "host": ["{{base_url}}"],
+              "path": ["api", "museum"]
+            }
+          }
+        },
+        {
+          "name": "Get Entry by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/museum/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "museum", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create Entry (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Admin Entry\",\n  \"phone\": \"9876543210\",\n  \"address\": \"Mumbai, India\",\n  \"num_of_persons\": \"3\",\n  \"total_amt\": \"150\",\n  \"payment\": \"0\",\n  \"gallery\": \"1\",\n  \"movie_show\": \"1\",\n  \"discount\": \"10\",\n  \"image_name\": \"admin_photo.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/museum",
+              "host": ["{{base_url}}"],
+              "path": ["api", "museum"]
+            }
+          }
+        },
+        {
+          "name": "Update Entry",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Updated Entry\",\n  \"phone\": \"1111111111\",\n  \"address\": \"Kolkata, India\",\n  \"num_of_persons\": \"4\",\n  \"total_amt\": \"200\",\n  \"payment\": \"1\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/museum/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "museum", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Entry",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/museum/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "museum", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search Operations",
+      "item": [
+        {
+          "name": "Search by Phone",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/museum/search/phone/1234567890",
+              "host": ["{{base_url}}"],
+              "path": ["api", "museum", "search", "phone", "1234567890"]
+            }
+          }
+        },
+        {
+          "name": "Search by Name",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/museum/search/name/john",
+              "host": ["{{base_url}}"],
+              "path": ["api", "museum", "search", "name", "john"]
+            }
+          }
+        },
+        {
+          "name": "Search by Date",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/museum/search/date/2024-01-01",
+              "host": ["{{base_url}}"],
+              "path": ["api", "museum", "search", "date", "2024-01-01"]
+            }
+          }
+        },
+        {
+          "name": "Global Search All Fields",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/museum/search/all/john",
+              "host": ["{{base_url}}"],
+              "path": ["api", "museum", "search", "all", "john"]
+            }
+          }
+        },
+        {
+          "name": "Multiple Search Filters",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"123456\",\n  \"name\": \"john\",\n  \"date\": \"2024-01-01\",\n  \"address\": \"delhi\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/museum/search",
+              "host": ["{{base_url}}"],
+              "path": ["api", "museum", "search"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "API Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/",
+              "host": ["{{base_url}}"],
+              "path": [""]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

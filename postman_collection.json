@@ -1,0 +1,175 @@
+{
+  "info": {
+    "name": "Museum API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET All Entries",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/museum",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "museum"]
+        }
+      }
+    },
+    {
+      "name": "GET Entry by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/museum/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "museum", "1"]
+        }
+      }
+    },
+    {
+      "name": "Search by Phone",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/museum/search/phone/1234567890",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "museum", "search", "phone", "1234567890"]
+        }
+      }
+    },
+    {
+      "name": "Search by Name",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/museum/search/name/john",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "museum", "search", "name", "john"]
+        }
+      }
+    },
+    {
+      "name": "Search by Date",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/museum/search/date/2024-01-01",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "museum", "search", "date", "2024-01-01"]
+        }
+      }
+    },
+    {
+      "name": "Multiple Search",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"phone\": \"123456\",\n  \"name\": \"john\",\n  \"date\": \"2024-01-01\",\n  \"address\": \"delhi\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/museum/search",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "museum", "search"]
+        }
+      }
+    },
+    {
+      "name": "Create Entry",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstname\": \"John Doe\",\n  \"phone\": \"1234567890\",\n  \"address\": \"Delhi, India\",\n  \"num_of_persons\": \"2\",\n  \"total_amt\": \"100\",\n  \"payment\": \"1\",\n  \"gallery\": \"1\",\n  \"movie_show\": \"0\",\n  \"discount\": \"0\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/museum",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "museum"]
+        }
+      }
+    },
+    {
+      "name": "Update Entry",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstname\": \"John Updated\",\n  \"phone\": \"9876543210\",\n  \"address\": \"Mumbai, India\",\n  \"num_of_persons\": \"3\",\n  \"total_amt\": \"150\",\n  \"payment\": \"0\",\n  \"gallery\": \"1\",\n  \"movie_show\": \"1\",\n  \"discount\": \"10\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/museum/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "museum", "1"]
+        }
+      }
+    },
+    {
+      "name": "Delete Entry",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/museum/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "museum", "1"]
+        }
+      }
+    },
+    {
+      "name": "Global Search All Fields",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/museum/search/all/1234",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "museum", "search", "all", "1234"]
+        }
+      }
+    }
+  ]
+}
