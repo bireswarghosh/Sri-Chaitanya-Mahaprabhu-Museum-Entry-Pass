@@ -1,5 +1,4 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 const router = express.Router();
 const db = require('../config/database');
 const { generateToken, verifyToken, isSuperAdmin } = require('../middleware/auth');
@@ -23,10 +22,8 @@ router.post('/login', async (req, res) => {
     
     const user = users[0];
     
-    // Check if password is hashed or plain text
-    const isValidPassword = user.password.startsWith('$2b$') && user.password.length === 60
-      ? await bcrypt.compare(password, user.password)
-      : password === user.password;
+    // Simple password check
+    const isValidPassword = password === user.password;
     
     if (!isValidPassword) {
       return res.status(401).json({ error: 'Wrong password' });
@@ -79,9 +76,8 @@ router.put('/update/:userId', verifyToken, isSuperAdmin, async (req, res) => {
     if (is_active !== undefined) { updateFields.push('is_active = ?'); values.push(is_active); }
     
     if (password) {
-      const hashedPassword = await bcrypt.hash(password, 10);
       updateFields.push('password = ?');
-      values.push(hashedPassword);
+      values.push(password);
     }
     
     if (updateFields.length === 0) {
