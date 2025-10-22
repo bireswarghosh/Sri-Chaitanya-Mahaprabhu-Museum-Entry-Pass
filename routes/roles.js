@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/database');
-const { verifyToken, isSuperAdmin } = require('../middleware/auth');
 
 // Get all roles
 router.get('/', async (req, res) => {

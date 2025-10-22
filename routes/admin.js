@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/database');
-const { verifyToken, isSuperAdmin, isAdmin } = require('../middleware/auth');
 
-// Get all admins (Super Admin only)
+// Get all admins
 router.get('/', async (req, res) => {
   try {
     const [admins] = await db.execute(
@@ -42,7 +41,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Create new admin (Super Admin only)
+// Create new admin
 router.post('/', async (req, res) => {
   try {
     const { username, firstname, lastname, email, mobile_no, password, admin_role_id } = req.body;
@@ -75,7 +74,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Update admin (Super Admin only)
+// Update admin
 router.put('/:id', async (req, res) => {
   try {
     const { firstname, lastname, email, mobile_no, admin_role_id, is_active } = req.body;
@@ -97,7 +96,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// Delete admin (Super Admin only)
+// Delete admin
 router.delete('/:id', async (req, res) => {
   try {
     // Skip self-delete check for development

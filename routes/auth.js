@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/database');
-const { generateToken, verifyToken, isSuperAdmin } = require('../middleware/auth');
 
 // Login
 router.post('/login', async (req, res) => {
@@ -39,11 +38,8 @@ router.post('/login', async (req, res) => {
       [user.user_id]
     );
     
-    const token = generateToken(user);
-    
     res.json({
       message: 'Login successful',
-      token,
       user: {
         user_id: user.user_id,
         username: user.username,
@@ -59,8 +55,8 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Update user (super admin only)
-router.put('/update/:userId', verifyToken, isSuperAdmin, async (req, res) => {
+// Update user
+router.put('/update/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
     const { username, firstname, lastname, email, password, admin_role_id, is_active } = req.body;
@@ -98,11 +94,10 @@ router.put('/update/:userId', verifyToken, isSuperAdmin, async (req, res) => {
 });
 
 // Get current user profile
-router.get('/profile', verifyToken, async (req, res) => {
+router.get('/profile', async (req, res) => {
   try {
     const [users] = await db.execute(
-      'SELECT u.*, r.admin_role_title FROM ci_users u LEFT JOIN ci_admin_roles r ON u.admin_role_id = r.admin_role_id WHERE u.user_id = ?',
-      [req.user.user_id]
+      'SELECT u.*, r.admin_role_title FROM ci_users u LEFT JOIN ci_admin_roles r ON u.admin_role_id = r.admin_role_id LIMIT 1'
     );
     
     if (users.length === 0) {
@@ -118,8 +113,8 @@ router.get('/profile', verifyToken, async (req, res) => {
   }
 });
 
-// Get all users (super admin only)
-router.get('/users', verifyToken, isSuperAdmin, async (req, res) => {
+// Get all users
+router.get('/users', async (req, res) => {
   try {
     const [users] = await db.execute(
       'SELECT user_id, username, firstname, lastname, email, admin_role_id, is_active, is_supper FROM ci_users'
