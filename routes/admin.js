@@ -1,5 +1,4 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 const router = express.Router();
 const db = require('../config/database');
 const { verifyToken, isSuperAdmin, isAdmin } = require('../middleware/auth');
@@ -58,7 +57,7 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: 'Username or email already exists' });
     }
     
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = password;
     
     const [result] = await db.execute(
       `INSERT INTO ci_users (username, firstname, lastname, email, mobile_no, password, 
