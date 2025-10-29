@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000',"https://sri-chaitanya-mahaprabhu-museum-entry.onrender.com","https://sri-chaitanya-mahaprabhu-museum-ent.vercel.app"],
+  origin: ['http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000',"https://sri-chaitanya-mahaprabhu-museum-entry.onrender.com","https://sri-chaitanya-mahaprabhu-museum-ent.vercel.app", "https://your-backend-name.vercel.app"],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -26,6 +26,15 @@ app.get('/', (req, res) => {
   res.json({ message: 'Museum API is running on port ' + PORT });
 });
 
-app.listen(PORT, () => {
-  console.log(`Museum API Server running on port ${PORT}`);
-});
+// For Vercel deployment
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Museum API Server running on port ${PORT}`);
+  });
+}
+
+module.exports = app;
+
+
+
+
